@@ -1,0 +1,14 @@
+* {
+}
+
+.list {
+  background-color: #777272;
+}
+
+.listItem {
+  background-color: #d6caca;
+}
+
+ul {
+  list-style-type: none;
+}
