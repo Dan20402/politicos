@@ -1,14 +1,9 @@
-* {
+#foto {
+  border-radius: 8px;
+  width: 150px;
+  height: 200px;
 }
 
 .list {
-  background-color: #777272;
-}
-
-.listItem {
-  background-color: #d6caca;
-}
-
-ul {
   list-style-type: none;
 }
