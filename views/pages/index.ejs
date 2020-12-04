@@ -1,0 +1,37 @@
+<%- include('../partials/header'); %>
+
+<body>
+<h1>Index title</h1>
+
+<form action="/" method="post">
+
+  
+  <select name="deputado" id="select">
+    <option value="">-- Selecione --</option>  
+    <% arrDeputados.forEach((deputado)=>{ %>
+        <option value="<%= JSON.stringify(deputado) %>"><%= deputado.nome %></option>
+    <% })%>    
+  </select>
+  <button type="submit">Submit</button>
+</form>
+
+<h3><%= deputado.nome %></h3>
+<img src="<%= deputado.urlFoto %>" alt="">
+<ul>
+  <% for(const [key, value] of Object.entries(deputado)){ %>
+    <% if(key !== 'id'&& key !== 'uri' && key !== 'uriPartido' && key !== 'idLegislatura' && key !== 'urlFoto')  { %>
+    <li><%= `${key} : ${value}` %> </li>
+    <% } %>
+ <% } %>
+</ul>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
