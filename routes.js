@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 let arrDeputados = [];
 let deputado = {};
 let despesas = {};
+let mesValor = [];
 
 router
   .route('/')
@@ -18,19 +19,15 @@ router
         res.render('pages/index', {
           arrDeputados: arrDeputados,
           deputado: deputado,
+          mesValor: mesValor,
         });
       });
   })
   .post((req, res) => {
     deputado = JSON.parse(req.body.deputado);
 
-    res.render('pages/index', {
-      arrDeputados: arrDeputados,
-      deputado: deputado,
-    });
-
     fetch(
-      `https://dadosabertos.camara.leg.br/api/v2/deputados/${deputado.id}/despesas?ordem=ASC&ordenarPor=ano`,
+      `https://dadosabertos.camara.leg.br/api/v2/deputados/${deputado.id}/despesas?ordem=ASC&ordenarPor=ano&ano=2020`,
       { headers: { 'Content-Type': 'application/json' }, method: 'GET' }
     )
       .then((response) => {
@@ -38,8 +35,26 @@ router
         if (response.ok) return response.json();
       })
       .then((data) => {
-        console.log(data);
+        despesas = data.dados;
+
+        despesas.forEach((obj) => {
+          mesValor.push({
+            mes: obj.mes,
+            valor: obj.valorLiquido,
+          });
+        });
+        mesValor.sort((a, b) => {
+          return a.mes - b.mes;
+        });
       });
+
+    console.log(mesValor);
+
+    res.render('pages/index', {
+      arrDeputados: arrDeputados,
+      deputado: deputado,
+      mesValor: mesValor,
+    });
   });
 
 module.exports = router;
