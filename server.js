@@ -5,11 +5,8 @@ const app = express();
 const router = require('./routes');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use('/', router);
-
 app.use(express.static('public'));
-
 app.use(express.json());
 
 app.set('view engine', 'ejs');

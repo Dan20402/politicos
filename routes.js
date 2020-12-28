@@ -1,60 +1,72 @@
 const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
+const axios = require('axios');
+const filtrarDados = require('./filtrar_dados');
 
-let arrDeputados = [];
+//Variaveis globais para templates
+let arrayDeputados = [];
 let deputado = {};
-let despesas = {};
-let mesValor = [];
+let cotaArr = [];
+let arrayNews = [];
 
 router
   .route('/')
   .get((req, res) => {
-    const url = 'https://dadosabertos.camara.leg.br/api/v2/deputados';
-    fetch(url)
-      .then((response) => response.json())
+    const nomeUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados';
+    fetch(nomeUrl)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(response.status);
+        }
+      })
       .then((data) => {
-        arrDeputados = data.dados;
-
+        arrayDeputados = data.dados;
         res.render('pages/index', {
-          arrDeputados: arrDeputados,
+          arrayDeputados: arrayDeputados,
           deputado: deputado,
-          mesValor: mesValor,
+          cotaArr: cotaArr,
+          arrayNews: arrayNews,
         });
-      });
+      })
+      .catch((err) => console.log(err));
   })
   .post((req, res) => {
     deputado = JSON.parse(req.body.deputado);
+    const cotaUrl = `https://dadosabertos.camara.leg.br/api/v2/deputados/${deputado.id}/despesas?ordem=ASC&ordenarPor=ano&ano=2020`;
 
-    fetch(
-      `https://dadosabertos.camara.leg.br/api/v2/deputados/${deputado.id}/despesas?ordem=ASC&ordenarPor=ano&ano=2020`,
-      { headers: { 'Content-Type': 'application/json' }, method: 'GET' }
-    )
-      .then((response) => {
-        //Obs: sem a checagem if abaixo, o response é undefined, por que?
-        if (response.ok) return response.json();
+    const apiKey = '5d425dea7e5246bda907a9cae559a448';
+    const domains = 'Uol.com.br,Abril.com.br,Terra.com.br';
+    const newsUrl = `http://newsapi.org/v2/everything?q=${deputado.nome}&apiKey=${apiKey}`;
+
+    const requests = [cotaUrl, newsUrl];
+    const promises = requests.map((url) => fetch(url));
+
+    Promise.all(promises)
+      .then(async ([promiseCota, promiseNews]) => {
+        const cota = await promiseCota.json();
+        const news = await promiseNews.json();
+        return [cota, news];
       })
       .then((data) => {
-        despesas = data.dados;
+        const cota = data[0].dados;
 
-        despesas.forEach((obj) => {
-          mesValor.push({
-            mes: obj.mes,
-            valor: obj.valorLiquido,
-          });
-        });
-        mesValor.sort((a, b) => {
-          return a.mes - b.mes;
+        //Visualizar somente os 3 primeiros artigos
+        const news = data[1].articles.slice(0, 5);
+
+        [cotaArr, arrayNews] = filtrarDados(cota, news);
+
+        /*1. Ordenar cota por mes, juntar e somar valores mensais */
+
+        res.render('pages/index', {
+          arrayDeputados: arrayDeputados,
+          deputado: deputado,
+          cotaArr: cotaArr,
+          arrayNews: arrayNews,
         });
       });
-
-    console.log(mesValor);
-
-    res.render('pages/index', {
-      arrDeputados: arrDeputados,
-      deputado: deputado,
-      mesValor: mesValor,
-    });
   });
 
 module.exports = router;
