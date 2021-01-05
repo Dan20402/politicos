@@ -19,40 +19,40 @@ const filtrarDados = (arrayCota, arrayNews) => {
   arrayCota.forEach((obj) => {
     switch (obj.mes) {
       case 1:
-        obj.mes = 'Jan';
+        obj.mes = 'Janeiro';
         break;
       case 2:
-        obj.mes = 'Fev';
+        obj.mes = 'Fevereiro';
         break;
       case 3:
-        obj.mes = 'Mar';
+        obj.mes = 'Março';
         break;
       case 4:
-        obj.mes = 'Abr';
+        obj.mes = 'Abril';
         break;
       case 5:
-        obj.mes = 'Mai';
+        obj.mes = 'Maio';
         break;
       case 6:
-        obj.mes = 'Jun';
+        obj.mes = 'Junho';
         break;
       case 7:
-        obj.mes = 'Jul';
+        obj.mes = 'Julho';
         break;
       case 8:
-        obj.mes = 'Ago';
+        obj.mes = 'Agosto';
         break;
       case 9:
-        obj.mes = 'Set';
+        obj.mes = 'Setembro';
         break;
       case 10:
-        obj.mes = 'Out';
+        obj.mes = 'Outubro';
         break;
       case 11:
-        obj.mes = 'Nov';
+        obj.mes = 'Novembro';
         break;
       case 12:
-        obj.mes = 'Dez';
+        obj.mes = 'Dezembro';
         break;
       default:
         obj.mes = 'Unidentified';

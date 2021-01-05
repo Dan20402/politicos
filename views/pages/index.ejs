@@ -1,49 +1,65 @@
 <%- include('../partials/header'); %>
 
 <body>
-<h1>Index title</h1>
-
-<form action="/" method="post">
-
-  
-  <select name="deputado" id="select">
-    <option value="">-- Selecione --</option>  
-    <% arrayDeputados.forEach((deputado)=>{ %>
-        <option value="<%= JSON.stringify(deputado) %>"><%= deputado.nome %></option>
-    <% })%>    
-  </select>
-  <button type="submit">Submit</button>
-</form>
-
-<img src="<%= deputado.urlFoto %>">
-<ul>
-<% cotaArr.forEach((obj)=>{ %>
-  <%obj.forEach((item)=>{ %>
-    <li><%= item.mes %> : <%= item.valorLiquido %> </li>
-    <% }) %>
-<%})%>
-</ul>
-
-<div id="news">
-  <% arrayNews.forEach((obj)=>{ %>
-    <div class="newsItem">
-      <h1><%= obj.title %></h1>
-      <h2><%= obj.source.name %></h2>
-      <p><%= obj.description %></p>
+  <div class="container">
+     <div class="foto-info">
+      <h3>Deputado Federal</h3>
+      <h1 id="nome-deputado"><%= deputado.nome %></h1>
+       <div id="testbox" ><img id="foto-deputado" src="<%= deputado.urlFoto %>" width="150px" height="200px"></div>      
+      <!-- <p><%= deputado.nome %></p> -->
+      <p>Partido: <%= deputado.siglaPartido%> - <%= deputado.siglaUf%> </p>
     </div>
-   <% })%>
-</div>
+    
+    <div class="cota">
+      <% if(cotaArr.length > 0) { %>
+        <h1 id="titulo-cota">Cota Parlamentar</h1>
+     <% } %>
+     
+ 
+      <% cotaArr.forEach((obj)=>{ %>
+        <a href=""><div class="button"><%= obj[0].mes %></div></a>
+        <%obj.forEach((item)=>{ %>          
+          <p><%= item.mes %> : $<%= item.valorLiquido %> </p>
+          <p><%= item.tipoDespesa%> </p>
+          <p><a href="<%=item.urlDocumento%>">Documento</a></p>
+          <% }) %>
+      <%})%>
+    </div>
 
+    <div class="news">
+      <% arrayNews.forEach((obj)=>{ %>
+      <div class="card">  
+        <div class="image-wrapper">
+          <img src="<%= obj.urlToImage %>" alt="">
+        </div>               
+          <a href="<%= obj.url %>">
+            <div class="card-body">
+            <h3><%= obj.title %></h3>
+            <p><%= obj.description %></p>
+          </div>
+        </a>
+        </div>
+        <% })%>
+      
+   
+     
 
+     
+    </div>
 
+    <div class="dropdown">
+      <form action="/" method="post">  
+        <select name="deputado" id="select">
+          <option value="">-- Selecione --</option>  
+          <% arrayDeputados.forEach((deputado)=>{ %>
+              <option value="<%= JSON.stringify(deputado) %>"><%= deputado.nome %></option>
+          <% })%>    
+        </select>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
 
+  </div>
 
-
-
-
-
-
-
-
-  </body>
+</body>
 </html>

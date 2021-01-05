@@ -1,1 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Playfair Display', serif;
+}
+/* CSS HEX */
+/* --dark-lava: #463f3aff;
+--middle-grey: #8a817cff;
+--pale-silver: #bcb8b1ff;
+--alabaster: #f4f3eeff;
+--melon: #e0afa0ff; */
+
+a,
+a:link,
+a:active,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: black;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  justify-content: center;
+}
+
+/* -------------------- foto-info --------------------*/
+.foto-info {
+  background-color: rgb(255, 255, 255);
+  display: grid;
+  justify-content: center;
+}
+
+.foto-info h3 {
+  font-family: 'Playfair Display', serif;
+  margin: 10px;
+}
+
+.foto-info h1 {
+  font-family: 'Playfair Display', serif;
+  margin-top: 0;
+}
+
+.foto-info img {
+  border-radius: 5%;
+  filter: grayscale(60%);
+  box-shadow: 1px 1px 10px 5px #aaaaaa;
+}
+
+.foto-info p {
+  font-family: 'Playfair Display', serif;
+}
+
+/* -------------------- cota -------------------- */
+
+.cota h1 {
+  font-family: 'Playfair Display', serif;
+}
+.month-buttons {
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: auto;
+  gap: 0px;
+}
+.button {
+  background-color: rgb(255, 255, 255);
+  border-radius: 3px;
+  padding: 2px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  text-align: center;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+
+  font-family: 'Playfair Display', serif;
+}
+
+.month-buttons a {
+  text-decoration: none;
+}
+.cota {
+  background-color: rgb(255, 255, 255);
+}
+
+/* ----------------------- News ------------------------------------- */
+
+.news {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 50px;
+}
+
+.card {
+  border: 1px solid black;
+  border-radius: 2%;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 2%;
+  filter: grayscale(40%);
+  box-shadow: 1px 1px 10px 5px #aaaaaa;
+}
+
+/* ------------------------- dropdown ------------------------------------*/
+
+.dropdown {
+  background-color: chartreuse;
+}
