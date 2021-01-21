@@ -36,14 +36,14 @@ router
 
   .post((req, res) => {
     deputado = JSON.parse(req.body.deputado);
-    const cotaUrl = `https://dadosabertos.camara.leg.br/api/v2/deputados/${deputado.id}/despesas?ordem=ASC&ordenarPor=ano&ano=2020`;
+    const cotaUrl = `https://dadosabertos.camara.leg.br/api/v2/deputados/${deputado.id}/despesas?ordem=ASC&itens=100&ordenarPor=ano&ano=2020`;
 
     const apiKey = '5d425dea7e5246bda907a9cae559a448';
     const newsUrl = `http://newsapi.org/v2/everything?q=${deputado.nome}&apiKey=${apiKey}`;
 
     const requests = [cotaUrl, newsUrl];
     const promises = requests.map((url) => fetch(url));
-
+ 
     Promise.all(promises)
       .then(async ([promiseCota, promiseNews]) => {
         const cota = await promiseCota.json();
